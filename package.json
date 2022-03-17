@@ -1,0 +1,24 @@
+{
+  "name": "lla-menu-story",
+  "version": "1.0.0",
+  "description": "An app that screen capture a web page and upload it as an instagram story",
+  "main": "server/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shawiizz/lla-menu-story.git"
+  },
+  "author": "Vrock691, Shawiiz_z",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Shawiizz/lla-menu-story/issues"
+  },
+  "homepage": "https://github.com/Shawiizz/lla-menu-story#readme",
+  "dependencies": {
+    "capture-website": "^2.3.0",
+    "instagram-private-api": "^1.45.3"
+  }
+}
