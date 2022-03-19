@@ -2,7 +2,7 @@
   "name": "lla-menu-story",
   "version": "1.0.0",
   "description": "An app that screen capture a web page and upload it as an instagram story",
-  "main": "server/main.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Shawiizz/lla-menu-story#readme",
   "dependencies": {
     "capture-website": "^2.3.0",
-    "instagram-private-api": "^1.45.3"
+    "instagram-private-api": "^1.45.3",
+    "node-xlsx": "^0.21.0"
   }
 }
