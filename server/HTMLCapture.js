@@ -26,3 +26,5 @@ async function getHTMLCapture() {
         console.log('Une erreur est survenue lors de la capture !', e)
     }
 }
+
+getHTMLCapture()
