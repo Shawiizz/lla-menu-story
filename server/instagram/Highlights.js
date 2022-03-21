@@ -1,12 +1,15 @@
-import {currentUser, ig} from "../main.js";
+import {getIGClient, getIGUser} from "./Authentication.js";
 
+/*
+This is needed because sometimes instagram api wants to verify the client isn't a robot so we need to do the request again (10 times max)
+ */
 let highlightCreateAttempts = 0
 let highlightGetAttempts = 0
 let highlightDeleteAttempts = 0
 
 async function createHighlight(name, media_ids) {
     try {
-        return await ig.highlights.createReel({
+        return await getIGClient().highlights.createReel({
             title: name,
             mediaIds: media_ids
         })
@@ -24,7 +27,7 @@ async function createHighlight(name, media_ids) {
 
 async function getHighlightByName(name) {
     try {
-        return (await ig.highlights.highlightsTray(currentUser.pk)).tray.find(highlight => highlight.title === name)
+        return (await getIGClient().highlights.highlightsTray(getIGUser().pk)).tray.find(highlight => highlight.title === name)
     } catch (e) {
         if(e.toString().includes('checkpoint_required')) {
             highlightGetAttempts++
@@ -39,7 +42,7 @@ async function getHighlightByName(name) {
 
 async function deleteHighlightByID(id) {
     try {
-        return await ig.highlights.deleteReel(id)
+        return await getIGClient().highlights.deleteReel(id)
     } catch (e) {
         if(e.toString().includes('checkpoint_required')) {
             highlightDeleteAttempts++
