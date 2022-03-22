@@ -10,9 +10,8 @@ function saveIGData() {
     fs.writeFileSync('./files/igdata.json', JSON.stringify(IGData, null, 4))
 }
 
-function getIGData() {
+function parseIGData() {
     IGData = JSON.parse(fs.readFileSync('./files/igdata.json'))
-    return IGData
 }
 
-export {getIGData, saveIGData}
+export {parseIGData, saveIGData, IGData}

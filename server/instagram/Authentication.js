@@ -1,6 +1,6 @@
 import {IgApiClient} from "instagram-private-api";
-import {getIGData} from "./IGData.js";
 import {checkXLSXFile} from "../util/XLSXUtil.js";
+import {parseIGData} from "./IGData.js";
 
 const igClient = new IgApiClient();
 let igUser;
@@ -10,12 +10,14 @@ Before logging in to Instagram, check that the IG data is correctly set to the v
 Btw this login function should be used 1 time per week (the sunday)
  */
 async function login(username, password) {
-    getIGData()
+    parseIGData()
     checkXLSXFile()
 
+    console.log("Logging in...");
     igClient.state.generateDevice(username);
     await igClient.account.login(username, password);
     igUser = await igClient.account.currentUser()
+    console.log("Successfully logged to IG!");
 }
 
 function getIGUser() {

@@ -1,11 +1,13 @@
-import {getHTMLFromMenu} from "../util/HTMLUtil.js";
+import {getHTMLCapture, getHTMLFromMenu} from "../util/HTMLUtil.js";
 import {getDayName} from "../util/DateUtil.js";
+import {postStory} from "../instagram/api/Story.js";
 
 class DayMenu {
     constructor() {
         this.repas_midi = undefined
         this.repas_soir = undefined
         this.date = undefined
+        this.screenPath = undefined
     }
 
     setRepasMidi(repas_midi) {
@@ -23,6 +25,16 @@ class DayMenu {
         return this
     }
 
+    async publishToStory() {
+        await this.takeScreenshot()
+        return await postStory(this.getScreenPath())
+    }
+
+    async takeScreenshot() {
+        this.screenPath = await getHTMLCapture(this)
+    }
+
+    getScreenPath() {return this.screenPath}
     getRepasMidi() {return this.repas_midi}
     getRepasSoir() {return this.repas_soir}
     getDate() {return this.date}

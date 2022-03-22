@@ -1,20 +1,23 @@
 import xlsx from "node-xlsx";
-import {getDayNumber} from "./util/DateUtil.js";
+import {getDayName, getDayNumber} from "./util/DateUtil.js";
 import {DayMenu} from "./classes/DayMenu.js";
 import {Repas} from "./classes/Repas.js";
+import {getXLSXDate} from "./util/XLSXUtil.js";
 
 /*
 const midiIndexes = [3, 4, 5, 6, 7]
 const soirIndexes = [10, 11, 12, 13, 14]
 */
 
-function getWeekMenu(monday) {
+function parseWeekMenu(monday_date_object) {
     const daysMenu = []
 
-    const monday_spl = monday.split(' ')
-    const monday_date_object = new Date(monday_spl[2], monday_spl[1]-1, monday_spl[0])
+    if(!monday_date_object instanceof Date) {
+        console.log('Wrong date object given');
+        return
+    }
 
-    const data = xlsx.parse(`files/menus.xlsx`).find(value => value.name === monday)?.data;
+    const data = xlsx.parse(`files/menus.xlsx`).find(value => value.name === getXLSXDate(monday_date_object.getTime()))?.data;
     if(!data) return undefined
 
     let column = 1
@@ -52,4 +55,4 @@ function getWeekMenu(monday) {
     return daysMenu.length === 0 ? undefined : daysMenu
 }
 
-export {getWeekMenu}
+export {parseWeekMenu}

@@ -1,14 +1,17 @@
-import {getWeekMenu} from "./server/MenuParser.js";
+import {parseWeekMenu} from "./server/MenuParser.js";
 import * as Authentication from "./server/instagram/Authentication.js";
-import {getHTMLCapture} from "./server/util/HTMLUtil.js";
+import {initCommandHandler} from "./server/util/CommandUtil.js";
+import {WeekMenu} from "./server/classes/WeekMenu.js";
 
 (async () => {
-   // await Authentication.login('', '');
+    initCommandHandler()
 
-    const week_menu = getWeekMenu('21 03 2022')
-    const monday_menu = week_menu[0] //example
-    console.log(monday_menu.getDayName());
-    await getHTMLCapture(monday_menu)
+    await Authentication.login('', '');
+
+    const week_menu = new WeekMenu().setMondayDate('21', '03', '2022').parseDaysMenu()
+    await week_menu.publishDays(['Lundi'])
+    await week_menu.moveToHighlight()
+
 
     /*setInterval(() => {
         //if day is sunday
@@ -29,7 +32,7 @@ import {getHTMLCapture} from "./server/util/HTMLUtil.js";
 })()
 
 async function test() {
-    console.log(getWeekMenu('21 03 2022'));
+    console.log(parseWeekMenu('21 03 2022'));
 
     console.log(new Date().getDay());
 

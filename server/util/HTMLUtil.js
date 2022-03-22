@@ -26,7 +26,7 @@ Create an HTML capture of the html file and return it
 async function getHTMLCapture(day_menu) {
     const filePath = `screenshots/story-${getXLSXDate(day_menu.getDate().getTime()).replaceAll(' ', '-')}.jpg`
 
-    console.log("Taking a screenshot, please wait 3 seconds...")
+    console.log("Taking a screenshot, please wait 2 seconds...")
     try {
         await captureWebsite.file(day_menu.getHTML(), filePath, {
             launchOptions: {
@@ -36,13 +36,16 @@ async function getHTMLCapture(day_menu) {
                 ]
             },
             inputType: 'html',
-            delay: 3, //We need to wait for fonts to be loaded before taking the screenshot, i think 3 seconds is enough
-            overwrite: true
+            delay: 2, //We need to wait for fonts to be loaded before taking the screenshot, i think 2 seconds is enough
+            overwrite: true,
+            width: 410,
+            height: 730,
+            type: 'jpeg'
         });
 
         console.log("Screenshot taken!")
 
-        return fs.readFileSync(filePath);
+        return filePath;
     } catch (e) {
         console.log('Une erreur est survenue lors de la capture !', e)
     }
