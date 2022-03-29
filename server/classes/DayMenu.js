@@ -26,6 +26,8 @@ class DayMenu {
     }
 
     async publishToStory() {
+        //Check that both (midi and soir) repas are available
+        if(!this.getRepasMidi().isAvailable() && !this.getRepasSoir().isAvailable()) return
         await this.takeScreenshot()
         return await postStory(this.getScreenPath())
     }

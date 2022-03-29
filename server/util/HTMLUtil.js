@@ -17,6 +17,21 @@ function getHTMLFromMenu(dayMenu) {
     dom.getElementById('plat2_soir').innerHTML = '<strong>Plat 2:</strong> '+dayMenu.getRepasSoir().getSecondPlat()
     dom.getElementById('dessert1_soir').innerHTML = '<strong>Dessert 1:</strong> '+dayMenu.getRepasSoir().getFirstDessert()
     dom.getElementById('dessert2_soir').innerHTML = '<strong>Dessert 2:</strong> '+dayMenu.getRepasSoir().getSecondDessert()
+
+    if(!dayMenu.getRepasMidi().isAvailable()) {
+        dom.getElementById('entree_midi').remove()
+        dom.getElementById('plat1_midi').remove()
+        dom.getElementById('plat2_midi').remove()
+        dom.getElementById('dessert1_midi').remove()
+        dom.getElementById('dessert2_midi').remove()
+    }
+    if(!dayMenu.getRepasSoir().isAvailable()) {
+        dom.getElementById('entree_soir').remove()
+        dom.getElementById('plat1_soir').remove()
+        dom.getElementById('plat2_soir').remove()
+        dom.getElementById('dessert1_soir').remove()
+        dom.getElementById('dessert2_soir').remove()
+    }
     return dom.toString()
 }
 
