@@ -1,9 +1,12 @@
 import {IgApiClient} from "instagram-private-api";
 import {checkXLSXFile} from "../util/XLSXUtil.js";
 import {parseIGData} from "./IGData.js";
+import {ask, askHidden} from "../util/CommandUtil.js";
 
-const igClient = new IgApiClient();
-let igUser;
+const ig_client = new IgApiClient();
+let ig_username;
+let ig_password;
+let ig_user;
 
 /*
 Before logging in to Instagram, check that the IG data is correctly set to the variable and that XLSX file is okay
@@ -14,18 +17,23 @@ async function login(username, password) {
     checkXLSXFile()
 
     console.log("Logging in...");
-    igClient.state.generateDevice(username);
-    await igClient.account.login(username, password);
-    igUser = await igClient.account.currentUser()
+    ig_client.state.generateDevice(username);
+    await ig_client.account.login(username, password);
+    ig_user = await ig_client.account.currentUser()
     console.log("Successfully logged to IG!");
 }
 
+async function askForCredentials() {
+    ig_username = await ask("Enter IG username: ")
+    ig_password = await askHidden("Enter IG password: ")
+}
+
 function getIGUser() {
-    return igUser
+    return ig_user
 }
 
 function getIGClient() {
-    return igClient
+    return ig_client
 }
 
-export {login, getIGUser, getIGClient}
+export {login, getIGUser, getIGClient, ig_username, ig_password, askForCredentials}

@@ -1,17 +1,18 @@
-import {initCommandHandler} from "./server/util/CommandUtil.js";
+import { initCommandHandler} from "./server/util/CommandUtil.js";
 import {WeekMenu} from "./server/classes/WeekMenu.js";
-import {IGData, parseIGData} from "./server/instagram/IGData.js";
+import {IGData} from "./server/instagram/IGData.js";
 import {getXLSXDate} from "./server/util/XLSXUtil.js";
 import * as Authentication from "./server/instagram/Authentication.js";
+import {askForCredentials, ig_password, ig_username} from "./server/instagram/Authentication.js";
 
 (async () => {
+    await askForCredentials()
     initCommandHandler()
 
-    //Login into Instagram
-    await Authentication.login('', '');
-
-    //Parse igdata.json
-    parseIGData()
+    /*Login into Instagram
+    + Parse IG Data and check excel file
+     */
+    await Authentication.login(ig_username, ig_password);
 
     setInterval(async () => {
          //if day is sunday
