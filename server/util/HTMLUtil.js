@@ -3,7 +3,7 @@ import fs from 'fs';
 import {parse} from "node-html-parser";
 import {getDayName, getMonthName} from "./DateUtil.js";
 import {getXLSXDate} from "./XLSXUtil.js";
-import {errlog, log} from "./Logger.js";
+import {log} from "./Logger.js";
 import sharp from 'sharp'
 import sizeOf from 'image-size'
 
@@ -65,7 +65,7 @@ async function getHTMLCapture(day_menu) {
 
         return filePath;
     } catch (e) {
-        errlog('Une erreur est survenue lors de la capture !', e)
+        console.log('Une erreur est survenue lors de la capture !', e)
     }
 }
 
