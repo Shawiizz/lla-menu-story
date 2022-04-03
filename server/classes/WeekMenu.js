@@ -53,7 +53,13 @@ class WeekMenu {
 
     async moveToHighlight() {
         //Make sure the former highlight is deleted before creating a new one
-        IGData.highlight_id.length > 0 && await deleteHighlightByID(IGData.highlight_id)
+        if(IGData.highlight_id.length > 0) {
+            log("An highlight has been found, deleting highlight, please wait...")
+            await deleteHighlightByID(IGData.highlight_id)
+            IGData.highlight_id = ""
+            saveIGData()
+            log("Highlight successfully deleted.")
+        }
 
         const res = await createHighlight('Menu du self', this.media_ids)
         if(!res || !res.reel.id) {

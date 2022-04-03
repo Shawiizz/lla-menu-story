@@ -31,6 +31,7 @@ function parseWeekMenu(monday_date_object) {
                 .setDate(new Date(monday_date_object.getFullYear(), monday_date_object.getMonth(), monday_date_object.getDate()+getDayNumber(day_name)-1, 6 /* Set to 6 hours to make sure the getTime will return this day*/))
                 .setRepasMidi(
                     new Repas()
+                        .setName(data[2][column])
                         .setEntree(data[3][column])
                         .setFirstPlat(data[4][column])
                         .setSecondPlat(data[5][column])
@@ -39,6 +40,7 @@ function parseWeekMenu(monday_date_object) {
                 )
                 .setRepasSoir(
                     new Repas()
+                        .setName(data[9][column])
                         .setEntree(data[10][column])
                         .setFirstPlat(data[11][column])
                         .setSecondPlat(data[12][column])

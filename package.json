@@ -20,8 +20,10 @@
   "dependencies": {
     "capture-website": "^2.3.0",
     "dotenv": "^16.0.0",
+    "image-size": "^1.0.1",
     "instagram-private-api": "^1.45.3",
     "node-html-parser": "^5.3.3",
-    "node-xlsx": "^0.21.0"
+    "node-xlsx": "^0.21.0",
+    "sharp": "^0.30.3"
   }
 }

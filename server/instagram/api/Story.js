@@ -8,7 +8,7 @@ This is needed because sometimes instagram api wants to verify the client isn't 
 let storyPostAttempts = 0
 
 async function postStory(filePath) {
-    log("Publishing a story, please wait 10 seconds...");
+    log("Publishing a story, please wait 20 seconds...");
     return await new Promise(resolve => {
         setTimeout(async () => {
             const file = fs.readFileSync(filePath);
@@ -26,7 +26,7 @@ async function postStory(filePath) {
                     resolve(await postStory(filePath))
                 } else console.error(e)
             }
-        }, 10000)
+        }, 20000)
     })
 }
 
