@@ -1,4 +1,4 @@
-import { initCommandHandler} from "./server/util/CommandUtil.js";
+import {initCommandHandler} from "./server/util/CommandUtil.js";
 import {WeekMenu} from "./server/classes/WeekMenu.js";
 import {IGData} from "./server/instagram/IGData.js";
 import {getXLSXDate} from "./server/util/XLSXUtil.js";
@@ -51,5 +51,5 @@ import 'dotenv/config'
     }
 
     await intervalFunc()
-    setInterval(intervalFunc, 60000)
+    setInterval(intervalFunc, 43200000)
 })()
