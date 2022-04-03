@@ -3,17 +3,26 @@ import {WeekMenu} from "./server/classes/WeekMenu.js";
 import {IGData} from "./server/instagram/IGData.js";
 import {getXLSXDate} from "./server/util/XLSXUtil.js";
 import * as Authentication from "./server/instagram/Authentication.js";
-import {askForCredentials, ig_password, ig_username} from "./server/instagram/Authentication.js";
-import {log, warn} from "./server/util/Logger.js";
+import {errlog, log, warn} from "./server/util/Logger.js";
+import 'dotenv/config'
 
 (async () => {
-    await askForCredentials()
+    if(!process.env?.username) {
+        errlog("username env variable is needed.")
+        process.exit()
+    }
+
+    if(!process.env?.password) {
+        errlog("password env variable is needed.")
+        process.exit()
+    }
+
     initCommandHandler()
 
     /*Login into Instagram
     + Parse IG Data and check excel file
      */
-    await Authentication.login(ig_username, ig_password);
+    await Authentication.login(process.env.username, process.env.password);
 
     const intervalFunc = async () => {
         //if day is sunday

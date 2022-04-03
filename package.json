@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Shawiizz/lla-menu-story#readme",
   "dependencies": {
     "capture-website": "^2.3.0",
+    "dotenv": "^16.0.0",
     "instagram-private-api": "^1.45.3",
     "node-html-parser": "^5.3.3",
     "node-xlsx": "^0.21.0"

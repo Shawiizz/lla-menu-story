@@ -3,7 +3,7 @@ import {IGData, saveIGData} from "../instagram/IGData.js";
 import {getXLSXDate} from "../util/XLSXUtil.js";
 import {createHighlight, deleteHighlightByID} from "../instagram/api/Highlights.js";
 import xlsx from "node-xlsx";
-import {errlog, log, warn} from "../util/Logger.js";
+import {errlog, log} from "../util/Logger.js";
 
 class WeekMenu {
     constructor() {
