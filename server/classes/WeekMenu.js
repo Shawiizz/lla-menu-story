@@ -2,6 +2,8 @@ import {parseWeekMenu} from "../MenuParser.js";
 import {IGData, saveIGData} from "../instagram/IGData.js";
 import {getXLSXDate} from "../util/XLSXUtil.js";
 import {createHighlight, deleteHighlightByID} from "../instagram/api/Highlights.js";
+import xlsx from "node-xlsx";
+import {errlog, log, warn} from "../util/Logger.js";
 
 class WeekMenu {
     constructor() {
@@ -17,14 +19,19 @@ class WeekMenu {
 
     parseDaysMenu() {
         this.daysMenu = parseWeekMenu(this.monday_date)
+        if(!this.daysMenu) errlog("No menu available for the week of "+getXLSXDate(this.monday_date.getTime()))
         return this
+    }
+
+    isAvailable() {
+        return xlsx.parse(`files/menus.xlsx`).find(value => value.name === getXLSXDate(this.monday_date.getTime()))?.data !== undefined
     }
 
     async publishAllMenusToStory() {
         for(const dayMenu of this.daysMenu) {
             const req = await dayMenu.publishToStory()
             if(!req || !req?.media?.id) {
-                console.log("A STORY CANNOT BE UPLOADED!!")
+                errlog("A STORY CANNOT BE UPLOADED!!")
                 return
             }
             this.media_ids.push(req.media.id)
@@ -37,7 +44,7 @@ class WeekMenu {
             if(!dayMenu) continue
             const req = await dayMenu.publishToStory()
             if(!req || !req?.media?.id) {
-                console.log("A STORY CANNOT BE UPLOADED!!")
+                errlog("A STORY CANNOT BE UPLOADED!!")
                 return
             }
             this.media_ids.push(req.media.id)
@@ -50,7 +57,7 @@ class WeekMenu {
 
         const res = await createHighlight('Menu du self', this.media_ids)
         if(!res || !res.reel.id) {
-            console.log("Error when creating an highlight!")
+            errlog("Error when creating an highlight!")
             return
         }
 
@@ -58,7 +65,7 @@ class WeekMenu {
         IGData.media_ids = this.media_ids
         this.makeAsDid()
 
-        console.log("Done!");
+        log("Done!");
     }
 
     makeAsDid() {

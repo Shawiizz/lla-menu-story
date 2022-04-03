@@ -10,4 +10,9 @@ function getMonthName(month) {
     return ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'][month]
 }
 
-export {getDayName, getMonthName, getDayNumber}
+function getDateNow() {
+    const dateNow = new Date()
+    return `${dateNow.getDate()}/${dateNow.getMonth()}/${dateNow.getFullYear()} à ${dateNow.getHours()}:${dateNow.getMinutes()}`
+}
+
+export {getDayName, getMonthName, getDayNumber, getDateNow}

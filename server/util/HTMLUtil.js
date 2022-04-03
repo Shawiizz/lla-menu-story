@@ -3,6 +3,7 @@ import fs from 'fs';
 import {parse} from "node-html-parser";
 import {getDayName, getMonthName} from "./DateUtil.js";
 import {getXLSXDate} from "./XLSXUtil.js";
+import {errlog, log} from "./Logger.js";
 
 function getHTMLFromMenu(dayMenu) {
     const dom = parse(fs.readFileSync('content/index.html'));
@@ -19,13 +20,16 @@ function getHTMLFromMenu(dayMenu) {
     dom.getElementById('dessert2_soir').innerHTML = '<strong>Dessert 2:</strong> '+dayMenu.getRepasSoir().getSecondDessert()
 
     if(!dayMenu.getRepasMidi().isAvailable()) {
+        dom.getElementById('title_midi').remove()
         dom.getElementById('entree_midi').remove()
         dom.getElementById('plat1_midi').remove()
         dom.getElementById('plat2_midi').remove()
         dom.getElementById('dessert1_midi').remove()
         dom.getElementById('dessert2_midi').remove()
     }
+
     if(!dayMenu.getRepasSoir().isAvailable()) {
+        dom.getElementById('title_soir').remove()
         dom.getElementById('entree_soir').remove()
         dom.getElementById('plat1_soir').remove()
         dom.getElementById('plat2_soir').remove()
@@ -41,7 +45,7 @@ Create an HTML capture of the html file and return it
 async function getHTMLCapture(day_menu) {
     const filePath = `screenshots/story-${getXLSXDate(day_menu.getDate().getTime()).replaceAll(' ', '-')}.jpg`
 
-    console.log("Taking a screenshot, please wait 2 seconds...")
+    log("Taking a screenshot, please wait 2 seconds...")
     try {
         await captureWebsite.file(day_menu.getHTML(), filePath, {
             launchOptions: {
@@ -58,11 +62,11 @@ async function getHTMLCapture(day_menu) {
             type: 'jpeg'
         });
 
-        console.log("Screenshot taken!")
+        log("Screenshot taken!")
 
         return filePath;
     } catch (e) {
-        console.log('Une erreur est survenue lors de la capture !', e)
+        errlog('Une erreur est survenue lors de la capture !', e)
     }
 }
 

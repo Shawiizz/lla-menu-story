@@ -1,4 +1,5 @@
 import * as readline from "readline";
+import {warn} from "./Logger.js";
 
 const commands = {
     "publishweek": {
@@ -44,7 +45,7 @@ function initCommandHandler() {
     function ask() {
         rl.question('', async (s) => {
             if (!s.startsWith('/')) {
-                console.log('Si tu veux éxécuter une commande, tu dois ajouter un / devant.')
+                warn('Si tu veux éxécuter une commande, tu dois ajouter un / devant.')
                 ask()
                 return
             }
@@ -53,7 +54,7 @@ function initCommandHandler() {
             const name = args[0].replace('/', '')
 
             if (!commands.hasOwnProperty(name)) {
-                console.log('Cette commande n\'existe pas !')
+                warn('Cette commande n\'existe pas !')
                 ask()
                 return
             }

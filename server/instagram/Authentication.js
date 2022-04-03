@@ -2,6 +2,7 @@ import {IgApiClient} from "instagram-private-api";
 import {checkXLSXFile} from "../util/XLSXUtil.js";
 import {parseIGData} from "./IGData.js";
 import {ask, askHidden} from "../util/CommandUtil.js";
+import {log} from "../util/Logger.js";
 
 const ig_client = new IgApiClient();
 let ig_username;
@@ -16,11 +17,11 @@ async function login(username, password) {
     parseIGData()
     checkXLSXFile()
 
-    console.log("Logging in...");
+    log("Logging in...");
     ig_client.state.generateDevice(username);
     await ig_client.account.login(username, password);
     ig_user = await ig_client.account.currentUser()
-    console.log("Successfully logged to IG!");
+    log("Successfully logged to IG!");
 }
 
 async function askForCredentials() {

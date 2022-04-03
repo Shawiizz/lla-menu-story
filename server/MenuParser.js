@@ -1,8 +1,9 @@
 import xlsx from "node-xlsx";
-import {getDayName, getDayNumber} from "./util/DateUtil.js";
+import {getDayNumber} from "./util/DateUtil.js";
 import {DayMenu} from "./classes/DayMenu.js";
 import {Repas} from "./classes/Repas.js";
 import {getXLSXDate} from "./util/XLSXUtil.js";
+import {errlog} from "./util/Logger.js";
 
 /*
 const midiIndexes = [3, 4, 5, 6, 7]
@@ -13,7 +14,7 @@ function parseWeekMenu(monday_date_object) {
     const daysMenu = []
 
     if(!monday_date_object instanceof Date) {
-        console.log('Wrong date object given');
+        errlog('Wrong date object given');
         return
     }
 
@@ -46,7 +47,7 @@ function parseWeekMenu(monday_date_object) {
                 )
             )
         } catch (e) {
-            console.log("Excel file isn't complete! Please check it and try again.");
+            errlog("Excel file isn't complete! Please check it and try again.");
             break
         }
         column++
