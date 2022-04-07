@@ -1,6 +1,6 @@
 import {IgApiClient} from "instagram-private-api";
 import {checkXLSXFile} from "../util/XLSXUtil.js";
-import {parseIGData} from "./IGData.js";
+import {parseIGData, watchIGData} from "./IGData.js";
 import {log} from "../util/Logger.js";
 
 const ig_client = new IgApiClient();
@@ -12,6 +12,7 @@ Btw this login function should be used 1 time per week (the sunday)
  */
 async function login(username, password) {
     parseIGData()
+    watchIGData()
     checkXLSXFile()
 
     log("Logging in...");

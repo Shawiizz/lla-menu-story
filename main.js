@@ -5,6 +5,7 @@ import {getXLSXDate} from "./server/util/XLSXUtil.js";
 import * as Authentication from "./server/instagram/Authentication.js";
 import {errlog, log, warn} from "./server/util/Logger.js";
 import 'dotenv/config'
+import {sendToDiscord} from "./server/discord/WebHook.js";
 
 (async () => {
     if(!process.env?.username) {
@@ -25,9 +26,9 @@ import 'dotenv/config'
     await Authentication.login(process.env.username, process.env.password);
 
     const intervalFunc = async () => {
-        //if day is sunday
+        //if day is sunday and it's more than 10 hours
         log("Checking week day...")
-        if(new Date().getDay() === 0) {
+        if(new Date().getDay() === 0 && new Date().getHours() >= 10) {
             log("It's sunday! Checking for next week menu...")
             const tomorrow = new Date(new Date().getTime() + (24 * 60 * 60 * 1000));
             const xlsxDate = getXLSXDate(tomorrow.getTime())
@@ -44,12 +45,14 @@ import 'dotenv/config'
                 warn("Next week's menu is not available in the excel file.")
                 return
             }
+
             log("Found menu of week "+getXLSXDate(week_menu.monday_date.getTime()) + ", it will be posted now.")
+            await sendToDiscord("BouffeMan", "<@509767147090608128>, <@436832490263412736> le menu va être posté sur Instagram !")
             await week_menu.publishAllMenusToStory()
             await week_menu.moveToHighlight()
         }
     }
 
     await intervalFunc()
-    setInterval(intervalFunc, 43200000)
+    setInterval(intervalFunc, 900000)
 })()

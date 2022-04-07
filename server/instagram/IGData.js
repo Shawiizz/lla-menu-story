@@ -1,4 +1,7 @@
 import fs from "fs";
+import {log} from "../util/Logger.js";
+
+const ig_data_path = './files/igdata.json'
 
 let IGData = {
     "highlight_id": "",
@@ -7,11 +10,18 @@ let IGData = {
 };
 
 function saveIGData() {
-    fs.writeFileSync('./files/igdata.json', JSON.stringify(IGData, null, 4))
+    fs.writeFileSync(ig_data_path, JSON.stringify(IGData, null, 4))
 }
 
 function parseIGData() {
-    IGData = JSON.parse(fs.readFileSync('./files/igdata.json'))
+    IGData = JSON.parse(fs.readFileSync(ig_data_path))
 }
 
-export {parseIGData, saveIGData, IGData}
+function watchIGData() {
+    fs.watchFile(ig_data_path, (curr, prev) => {
+        log("Updating IG Data from file.")
+        parseIGData()
+    });
+}
+
+export {parseIGData, saveIGData, watchIGData, IGData}

@@ -1,9 +1,11 @@
 import * as readline from "readline";
-import {warn} from "./Logger.js";
+import {commandlog, warn} from "./Logger.js";
 
 const commands = {
-    "publishweek": {
-        fn: publishWeekCommand
+    "publish": {
+        fn: publishCommand,
+        usage: "/publish dd mm yyyy",
+        description: "Commande pour manuellement poster le menu avec le programme."
     },
 }
 
@@ -31,7 +33,7 @@ function initCommandHandler() {
             }
 
             try {
-                commands[name].fn(args, s)
+                if(!commands[name].fn(args, s)) commandlog("Utilisation : "+commands[name].usage)
             } catch (err) {
                 console.log(err.message)
             }
@@ -42,8 +44,13 @@ function initCommandHandler() {
     ask()
 }
 
-function publishWeekCommand(args, string) {
+function publishCommand(args, string) {
+    if(args.length !== 4) {
+        commandlog("Tu dois spécifier le jour, le mois et l'année.")
+        return
+    }
 
+    return true
 }
 
 export {initCommandHandler}

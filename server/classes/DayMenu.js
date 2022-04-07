@@ -1,6 +1,7 @@
 import {getHTMLCapture, getHTMLFromMenu} from "../util/HTMLUtil.js";
 import {getDayName} from "../util/DateUtil.js";
 import {postStory} from "../instagram/api/Story.js";
+import {sendToDiscord} from "../discord/WebHook.js";
 
 class DayMenu {
     constructor() {
@@ -29,6 +30,7 @@ class DayMenu {
         //Check that both (midi and soir) repas are available
         if(!this.getRepasMidi().isAvailable() && !this.getRepasSoir().isAvailable()) return
         await this.takeScreenshot()
+        await sendToDiscord("BouffeMan", "", this.getScreenPath())
         return await postStory(this.getScreenPath())
     }
 
