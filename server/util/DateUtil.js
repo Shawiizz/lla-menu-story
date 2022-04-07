@@ -12,7 +12,7 @@ function getMonthName(month) {
 
 function getDateNow() {
     const dateNow = new Date()
-    return `${dateNow.getDate()}/${dateNow.getMonth()}/${dateNow.getFullYear()} à ${dateNow.getHours()}:${dateNow.getMinutes()}`
+    return `${dateNow.getDate()}/${dateNow.getMonth()+1}/${dateNow.getFullYear()} à ${dateNow.getHours()}:${dateNow.getMinutes()}`
 }
 
 export {getDayName, getMonthName, getDayNumber, getDateNow}
